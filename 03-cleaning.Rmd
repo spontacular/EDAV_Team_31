@@ -1,1 +1,46 @@
 # Data transformation
+
+## UNHCR Refugee Data
+
+We first downloaded the Global Refugee Population Data by Country of Origin from UNHCR - https://www.unhcr.org/en-us/data.html
+
+This Data comes with descriptive headers which we excluded during ingestion. We then removed the data with Country Name being 'Unknown'.
+
+Since the average refugee crisis length is 17 years, we would only look at the years 2000 - 2020 to exclude old crises from our analysis. 
+<br>(**Source** - https://blogs.worldbank.org/dev4peace/2019-update-how-long-do-refugees-stay-exile-find-out-beware-averages)
+
+For the purpose of our project, we would do a cross analysis between Origin and Asylum only on the Top 5 countries by Country of Origin due to size constraints.
+
+We exported a cleaned version of our original Data by applying the above 2 filters.
+
+```{r}
+library(dplyr)
+```
+
+```{r}
+raw_data_origin <- read.csv("data/raw/refugee_origin_all.csv", skip = 14)
+raw_data_origin <- subset(raw_data_origin, Country.of.origin != "Unknown ")
+raw_data_origin <- subset(raw_data_origin, Year >= 2000)
+country_aggregate_origin <- aggregate(raw_data_origin$Refugees.under.UNHCR.s.mandate, by = list(Country.of.origin = raw_data_origin$Country.of.origin), FUN = sum)
+top_countries_origin <- top_n(country_aggregate_origin, 5)
+top_data_origin <- subset(raw_data_origin, Country.of.origin %in% top_countries_origin$Country.of.origin)
+write.csv(raw_data_origin,"data/clean/refugee_origin_all.csv", row.names = FALSE)
+write.csv(top_data_origin,"data/clean/refugee_origin_top.csv", row.names = FALSE)
+```
+
+The Top 5 Countries were observed to be - **Afghanistan, Syria, Iraq, Somalia and Sudan**
+
+We then downloaded the Global Refugee Population Data by Country of Asylum vs Country of Origin for just these 5 countries from UNHCR - https://www.unhcr.org/en-us/data.html
+
+```{r}
+raw_data_asylum <- read.csv("data/raw/refugee_asylum_all.csv", skip = 14)
+raw_data_asylum <- subset(raw_data_asylum, Country.of.origin != "Unknown ")
+raw_data_asylum <- subset(raw_data_asylum, Year >= 2000)
+top_data_asylum <- read.csv("data/raw/refugee_asylum_top.csv", skip = 14)
+write.csv(raw_data_asylum,"data/clean/refugee_asylum_all.csv", row.names = FALSE)
+write.csv(top_data_asylum,"data/clean/refugee_asylum_top.csv", row.names = FALSE)
+```
+
+## World Bank Databank
+
+## New York Times Article Data

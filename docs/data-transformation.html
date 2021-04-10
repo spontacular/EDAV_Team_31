@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Data transformation | YOUR TITLE HERE</title>
-  <meta name="description" content="Chapter 3 Data transformation | YOUR TITLE HERE" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <title>Chapter 3 Data transformation | Refugee Crisis Analysis</title>
+  <meta name="description" content="Chapter 3 Data transformation | Refugee Crisis Analysis" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Data transformation | YOUR TITLE HERE" />
+  <meta property="og:title" content="Chapter 3 Data transformation | Refugee Crisis Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,15 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Data transformation | YOUR TITLE HERE" />
+  <meta name="twitter:title" content="Chapter 3 Data transformation | Refugee Crisis Analysis" />
   
   
   
 
-<meta name="author" content="YOUR NAMES HERE" />
+<meta name="author" content="Archit Matta and Tushar Agrawal" />
 
 
-<meta name="date" content="2020-11-09" />
+<meta name="date" content="2021-04-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="data-sources.html"/>
 <link rel="next" href="missing-values.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 
@@ -68,12 +67,17 @@
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">SHORT TITLE HERE</a></li>
+<li><a href="./">Refugee</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
-<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#unhcr-refugee-data"><i class="fa fa-check"></i><b>3.1</b> UNHCR Refugee Data</a></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#world-bank-databank"><i class="fa fa-check"></i><b>3.2</b> World Bank Databank</a></li>
+<li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#new-york-times-article-data"><i class="fa fa-check"></i><b>3.3</b> New York Times Article Data</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
@@ -89,7 +93,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">YOUR TITLE HERE</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Refugee Crisis Analysis</a>
           </h1>
         </div>
 
@@ -99,7 +103,24 @@
             <section class="normal" id="section-">
 <div id="data-transformation" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
+<div id="unhcr-refugee-data" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> UNHCR Refugee Data</h2>
+<p>We first downloaded the Global Refugee Population Data by Country of Origin from UNHCR - <a href="https://www.unhcr.org/en-us/data.html" class="uri">https://www.unhcr.org/en-us/data.html</a></p>
+<p>This Data comes with descriptive headers which we excluded during ingestion. We then removed the data with Country Name being ‘Unknown’.</p>
+<p>Since the average refugee crisis length is 17 years, we would only look at the years 2000 - 2020 to exclude old crises from our analysis.
+<br>(<strong>Source</strong> - <a href="https://blogs.worldbank.org/dev4peace/2019-update-how-long-do-refugees-stay-exile-find-out-beware-averages" class="uri">https://blogs.worldbank.org/dev4peace/2019-update-how-long-do-refugees-stay-exile-find-out-beware-averages</a>)</p>
+<p>For the purpose of our project, we would do a cross analysis between Origin and Asylum only on the Top 5 countries by Country of Origin due to size constraints.</p>
+<p>We exported a cleaned version of our original Data by applying the above 2 filters.</p>
+<p>The Top 5 Countries were observed to be - <strong>Afghanistan, Syria, Iraq, Somalia and Sudan</strong></p>
+<p>We then downloaded the Global Refugee Population Data by Country of Asylum vs Country of Origin for just these 5 countries from UNHCR - <a href="https://www.unhcr.org/en-us/data.html" class="uri">https://www.unhcr.org/en-us/data.html</a></p>
+</div>
+<div id="world-bank-databank" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> World Bank Databank</h2>
+</div>
+<div id="new-york-times-article-data" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> New York Times Article Data</h2>
 
+</div>
 </div>
             </section>
 
@@ -138,7 +159,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/edit/main/03-cleaning.Rmd",
+"link": "https://github.com/spontacular/Refugee_Crisis_Analysis/edit/main/03-cleaning.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -146,7 +167,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/YOUR GITHUB USERNAME/YOUR REPO NAME/blob/main/03-cleaning.Rmd",
+"link": "https://github.com/spontacular/Refugee_Crisis_Analysis/blob/main/03-cleaning.Rmd",
 "text": null
 },
 "download": null,
