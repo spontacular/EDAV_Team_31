@@ -34,7 +34,7 @@ We then downloaded the Global Refugee Population Data by Country of Asylum vs Co
 
 ```{r}
 raw_data_asylum <- read.csv("data/raw/refugee_asylum_all.csv", skip = 14)
-raw_data_asylum <- subset(raw_data_asylum, Country.of.origin != "Unknown ")
+raw_data_asylum <- subset(raw_data_asylum, Country.of.asylum != "Unknown ")
 raw_data_asylum <- subset(raw_data_asylum, Year >= 2000)
 top_data_asylum <- read.csv("data/raw/refugee_asylum_top.csv", skip = 14)
 write.csv(raw_data_asylum,"data/clean/refugee_asylum_all.csv", row.names = FALSE)
