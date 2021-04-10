@@ -1,6 +1,6 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAMES HERE"
+title: "Refugee Crisis Analysis"
+author: "Archit Matta and Tushar Agrawal"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
