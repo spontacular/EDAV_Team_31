@@ -1,1 +1,66 @@
 # Missing values
+
+**UNHCR Refugee Data**
+
+The Refugee Data had a lot of missing values. However since this was time series data, not all missing values were significant. For example - Angola had Refugee Numbers starting from 1960 while Colombia had Refugee Numbers starting from 1981. So even though Colombia would have missing values from 1960 to 1980, these would not be significant as it did not have a Refugee Crisis at that time.
+
+Thus the missing values were split into 2 categories -
+<ul>
+<li>**Significant** - Missing Values after the First Non-NULL Year</li>
+<li>**Insignificant** - Missing Values before the First Non-NULL Year</li>
+</ul>
+
+This distinction was arrived based on the above example as the first Non-NULL year by country would indicate the start of a Refugee Crisis and the missing values after this year would be 'missing' while the missing values before this year would be 'absent'.
+
+```{r}
+library(reshape2)
+library(ggplot2)
+```
+
+```{r, fig.align='center'}
+first_non_null <- function(row) {
+  NonNAindex <- which(!is.na(row))
+  NonNAindex <- NonNAindex[-c(1)]
+  firstNonNA <- min(NonNAindex)
+  firstNonNA <- firstNonNA - 2
+  return(firstNonNA)
+}
+
+raw_data_origin <- read.csv("data/raw/refugee_origin_all.csv", skip = 14)
+pivot_table <-  dcast(raw_data_origin, Country.of.origin ~ Year, value.var = "Refugees.under.UNHCR.s.mandate")
+total_null <- sum(is.na(pivot_table))
+insignificant_null <- apply(pivot_table, 1, first_non_null)
+significant_null <- total_null - sum(insignificant_null)
+
+raw_data_origin_recent <- subset(raw_data_origin, Year >= 2000)
+pivot_table_recent <-  dcast(raw_data_origin_recent, Country.of.origin ~ Year, value.var = "Refugees.under.UNHCR.s.mandate")
+total_null_recent <- sum(is.na(pivot_table_recent))
+insignificant_null_recent <- apply(pivot_table_recent, 1, first_non_null)
+significant_null_recent <- total_null_recent - sum(insignificant_null_recent)
+
+years <- c('1960 - 2020', '1960 - 2020', '2000 - 2020', '2000 - 2020')
+significance <- c('significant', 'insignificant', 'significant', 'insignificant')
+value <- c(significant_null, (total_null - significant_null), significant_null_recent, (total_null_recent - significant_null_recent))
+null_data <- data.frame(years, significance, value)
+
+ggplot(null_data, aes(fill = significance, y = value, x = years)) + geom_bar(position="fill", stat="identity") + ggtitle("Missing Values by Years and Significance")  + theme(plot.title = element_text(hjust = 0.5))
+```
+
+It can be observed that the proportion of Significant Missing Values out of the Total Missing values is more in the time period 2000 - 2020 in comparison to 1960 - 2020. The absolute percentage of Significant Missing Values out of the Total Values for the time period 1960 - 2020 is 0.82% and for the time period 2000 - 2020 is 0.39%.
+
+```{r, fig.align='center'}
+na_count <- sapply(pivot_table_recent, function(y) sum(length(which(is.na(y)))))
+na_count <- na_count[-c(1)]
+
+ggplot(data = NULL, aes(x = as.numeric(names(na_count)), y = as.numeric(na_count))) + geom_bar(stat = "identity", width = .75) + ggtitle("Missing Values by Years") + xlab("Year") + ylab("Number of Missing Values")  + theme(plot.title = element_text(hjust = 0.5))
+```
+
+It can be observed that the number of Missing Values seems to have a decresing trend with Year.
+
+**World Bank Databank**
+
+The World Bank Databank had all values missing for 2020. This could be because of a Data Refresh Delay. The other missing values did not have a direct impact as the average over the entire time period was calculated.
+
+**New York Times Article Data**
+
+The New York Times Dataset did not have any missing values in the Abstract field. This could be because of some sanity checks by the New York Times Article Search API.

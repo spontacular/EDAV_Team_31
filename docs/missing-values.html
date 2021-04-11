@@ -71,7 +71,12 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
+<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#what-is-the-problem"><i class="fa fa-check"></i><b>2.1</b> What is the Problem?</a></li>
+<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#what-are-the-reasons"><i class="fa fa-check"></i><b>2.2</b> What are the reasons?</a></li>
+<li class="chapter" data-level="2.3" data-path="data-sources.html"><a href="data-sources.html#can-this-be-validated"><i class="fa fa-check"></i><b>2.3</b> Can this be Validated?</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#unhcr-refugee-data"><i class="fa fa-check"></i><b>3.1</b> UNHCR Refugee Data</a></li>
@@ -103,6 +108,26 @@
             <section class="normal" id="section-">
 <div id="missing-values" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
+<p><strong>UNHCR Refugee Data</strong></p>
+<p>The Refugee Data had a lot of missing values. However since this was time series data, not all missing values were significant. For example - Angola had Refugee Numbers starting from 1960 while Colombia had Refugee Numbers starting from 1981. So even though Colombia would have missing values from 1960 to 1980, these would not be significant as it did not have a Refugee Crisis at that time.</p>
+Thus the missing values were split into 2 categories -
+<ul>
+<li>
+<strong>Significant</strong> - Missing Values after the First Non-NULL Year
+</li>
+<li>
+<strong>Insignificant</strong> - Missing Values before the First Non-NULL Year
+</li>
+</ul>
+<p>This distinction was arrived based on the above example as the first Non-NULL year by country would indicate the start of a Refugee Crisis and the missing values after this year would be ‘missing’ while the missing values before this year would be ‘absent’.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>It can be observed that the proportion of Significant Missing Values out of the Total Missing values is more in the time period 2000 - 2020 in comparison to 1960 - 2020. The absolute percentage of Significant Missing Values out of the Total Values for the time period 1960 - 2020 is 0.82% and for the time period 2000 - 2020 is 0.39%.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>It can be observed that the number of Missing Values seems to have a decresing trend with Year.</p>
+<p><strong>World Bank Databank</strong></p>
+<p>The World Bank Databank had all values missing for 2020. This could be because of a Data Refresh Delay. The other missing values did not have a direct impact as the average over the entire time period was calculated.</p>
+<p><strong>New York Times Article Data</strong></p>
+<p>The New York Times Dataset did not have any missing values in the Abstract field. This could be because of some sanity checks by the New York Times Article Search API.</p>
 
 </div>
             </section>

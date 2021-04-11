@@ -1,5 +1,8 @@
 introduction
 data-sources
+what-is-the-problem
+what-are-the-reasons
+can-this-be-validated
 data-transformation
 unhcr-refugee-data
 world-bank-databank

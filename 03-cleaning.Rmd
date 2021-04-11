@@ -2,16 +2,14 @@
 
 ## UNHCR Refugee Data
 
-We first downloaded the Global Refugee Population Data by Country of Origin from UNHCR - https://www.unhcr.org/en-us/data.html
+Global Refugee Population Data by Country of Origin from UNHCR - https://www.unhcr.org/en-us/data.html was extracted.
 
-This Data comes with descriptive headers which we excluded during ingestion. We then removed the data with Country Name being 'Unknown'.
+This Data came with descriptive headers which were excluded during ingestion. Data with Country Name - 'Unknown' was then removed.
 
-Since the average refugee crisis length is 17 years, we would only look at the years 2000 - 2020 to exclude old crises from our analysis. 
+Since the average refugee crisis length is 17 years, this analysis only looked at the years 2000 - 2020 to exclude old crises.
 <br>(**Source** - https://blogs.worldbank.org/dev4peace/2019-update-how-long-do-refugees-stay-exile-find-out-beware-averages)
 
-For the purpose of our project, we would do a cross analysis between Origin and Asylum only on the Top 5 countries by Country of Origin due to size constraints.
-
-We exported a cleaned version of our original Data by applying the above 2 filters.
+A cross analysis between Country of Origin and Country of Asylum was done only for the Top 5 countries by Refugee Population due to size constraints.
 
 ```{r}
 library(dplyr)
@@ -30,7 +28,7 @@ write.csv(top_data_origin,"data/clean/refugee_origin_top.csv", row.names = FALSE
 
 The Top 5 Countries were observed to be - **Afghanistan, Syria, Iraq, Somalia and Sudan**
 
-We then downloaded the Global Refugee Population Data by Country of Asylum vs Country of Origin for just these 5 countries from UNHCR - https://www.unhcr.org/en-us/data.html
+Global Refugee Population Data by Country of Asylum vs Country of Origin for just these 5 countries from UNHCR - https://www.unhcr.org/en-us/data.html was extracted.
 
 ```{r}
 raw_data_asylum <- read.csv("data/raw/refugee_asylum_all.csv", skip = 14)
@@ -43,4 +41,17 @@ write.csv(top_data_asylum,"data/clean/refugee_asylum_top.csv", row.names = FALSE
 
 ## World Bank Databank
 
+World Bank Global Development Databank - https://data.worldbank.org/ was used to extract data about Adult Literacy Rate, Youth Literacy Rate, Mortality Rate, Total Deaths by Injuries, Total Deaths, Hospital Beds per Capita & GDP per Capita by Country and Year for the period 2000 - 2020.
+
+This Data came with descriptive headers which were excluded during ingestion. Blank values were represented by '..' and were converted to NULL to ensure consistency. Average values by Country and Field were calculated over the entire time period. This Dataset was then joined with the Refugee Population Database using Country ISO Codes.
+
+The transformation for this Dataset was conducted in Excel.
+
 ## New York Times Article Data
+
+News Articles from The New York Times containing any of the following terms - Afghanistan Refugees, Syria Refugees, Iraq Refugees, Somalia Refugees and Sudan Refugees were scraped.
+<br>(**Source** - https://github.com/jsonkao/nyt-articles)
+
+The Article 'Abstract' was picked as the Text Corporus for this analysis.
+
+The Text Data was processed to remove Numbers, Punctuation, Whitespace and Stopwords. All words were then converted to Lower Case to ensure consistency. Some specific phrases like '000' and 'mr.' which came up in the most frequent words were also removed.
