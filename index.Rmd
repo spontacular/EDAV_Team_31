@@ -7,3 +7,17 @@ site: bookdown::bookdown_site
 
 # Introduction
 
+There are 71 million forcibly displaced people in the world as a result of persecution, conﬂict, violence, or human rights violations — On average, every minute eight people leave everything behind to escape war, persecution or terror. This number has been steadily increasing with time as more people are forced to flee their homes.
+
+Even though the number of forcibly displaced people is increasing year by year, many countries have closed their borders for families seeking protection and slashed their refugee quotas. In July 2019, the U.S. proposed a refugee resettlement ceiling of 18,000 for fiscal year 2020, a record low and a significant drop from the 97,000 ceiling in 2016. Austria and other countries in the EU led by populist/nativist politicians have closed all doors to asylum-seekers. 
+
+The following link provides an interactive insider view into the life of a refugee - https://www.bbc.com/news/world-middle-east-32057601
+
+This topic was chosen because of the team's interest in working towards social issues & because of the severity of the problem.
+
+This analysis aims to answer the following questions -
+<ul>
+<li>How have the Global Refugee Trends changed with time?</li>
+<li>What are the key factors influencing these trends?</li>
+<li>Are News Articles also indicative of these identified trends?</li>
+</ul>

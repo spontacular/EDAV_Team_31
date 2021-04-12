@@ -1,1 +1,235 @@
 # Results
+
+## Which countries do most Refugees come from?
+
+```{r, include = FALSE}
+
+#https://www.debugcn.com/en/article/57148071.html
+#https://rpubs.com/emmavalme/rworldmap_vignette
+
+library(rworldmap)
+library(RColorBrewer)
+#Data Preprocessing
+
+c <- read.csv("data/clean/refugee_worldbank_all.csv")
+colnames(c)[3] <- "literacy_rate_adults"
+colnames(c)[4] <- "literacy_rate_youth"
+colnames(c)[5] <- "infant_mortality_rate"
+colnames(c)[6] <- "percent_death_by_injury"
+colnames(c)[7] <- "death_rate_per_1000"
+colnames(c)[8] <- "Hospital_beds_per_1000"
+colnames(c)[9] <- "GDP_per_capita"
+
+c$literacy_rate_adults = as.integer(c$literacy_rate_adults)
+c$literacy_rate_youth = as.integer(c$literacy_rate_youth)
+c$infant_mortality_rate = as.integer(c$infant_mortality_rate)
+c$percent_death_by_injury = as.integer(c$percent_death_by_injury)
+
+c$death_rate_per_1000 = as.integer(c$death_rate_per_1000)
+c$Hospital_beds_per_1000 = as.integer(c$Hospital_beds_per_1000)
+
+c$GDP_per_capita = as.integer(c$GDP_per_capita)
+#c$log_hospital_beds = log(c$Hospital_beds_per_1000)
+c$Sum.of.Refugees.under.UNHCR.s.mandate = c$Sum.of.Refugees.under.UNHCR.s.mandate/1000000
+joinData <- joinCountryData2Map(c,
+                                 joinCode = "ISO3",
+                                nameJoinColumn = "Country_ISO")
+```
+
+```{r}
+#Refugee Population by Country of Origin aggregated over the last 20 years
+colourPalette <- brewer.pal(7,'Reds')
+options(scipen=5)
+theMap <- mapCountryData(joinData, nameColumnToPlot="Sum.of.Refugees.under.UNHCR.s.mandate", addLegend=FALSE, catMethod = "pretty", colourPalette = colourPalette, mapTitle='Refugee Population by Origin for 2000 - 2020 (Millions)')
+do.call( addMapLegend, c(theMap, legendWidth=1, legendLabels = 'all', legendMar = 2, labelFontSize =0.8))
+```
+
+It can be seen that a significant number of refugees come from the Middle East and North Africa (MENA) Region.
+
+```{r}
+#Refugee Population by Country of Origin aggregated over the last 20 years for MENA Region
+options(scipen=5)
+theMap <- mapCountryData(joinData, nameColumnToPlot="Sum.of.Refugees.under.UNHCR.s.mandate", addLegend=FALSE, catMethod = "pretty", colourPalette = colourPalette, mapTitle='MENA Refugee Population by Origin for 2000 - 2020 (Millions)', mapRegion="Africa")
+do.call( addMapLegend, c(theMap, legendWidth=1, legendLabels = 'all', legendMar = 2, labelFontSize =0.8))
+```
+
+Taking a closer look at the MENA Region, we observe Afghanistan, Syria, Iraq, Somalia and Sudan to be the Top 5 Countries of Origin for Refugees Globally.
+
+## Which countries do most Refugees go to?
+
+```{r, include = FALSE}
+d <- read.csv("data/clean/refugee_asylum_aggregate.csv")
+d$Sum.of.Refugees.under.UNHCR.s.mandate = d$Sum.of.Refugees.under.UNHCR.s.mandate/1000000
+joinData2 <- joinCountryData2Map(d,
+                                 joinCode = "ISO3",
+                                nameJoinColumn = "Country_ISO")
+```
+
+```{r}
+#Refugee Population by Country of Asylum aggregated over the last 20 years
+colourPalette <- brewer.pal(7,'Greens')
+options(scipen=5)
+theMap2 <- mapCountryData(joinData2, nameColumnToPlot="Sum.of.Refugees.under.UNHCR.s.mandate", addLegend=FALSE, catMethod = "pretty", colourPalette = colourPalette, mapTitle='Refugee Population by Asylum for 2000 - 2020 (Millions)')
+do.call( addMapLegend, c(theMap2, legendWidth=1, legendLabels = 'all', legendMar = 2, labelFontSize =0.8))
+```
+
+It can be seen that a significant number of refugees go to the Middle East and North Africa (MENA) Region. There is also some number of Refugees that go to the North America and Asia Regions.
+
+```{r}
+#Refugee Population by Country of Asylum aggregated over the last 20 years for MEA Region
+options(scipen=5)
+theMap2 <- mapCountryData(joinData2, nameColumnToPlot="Sum.of.Refugees.under.UNHCR.s.mandate", addLegend=FALSE, catMethod = "pretty", colourPalette = colourPalette, mapTitle='MENA Refugee Population by Asylum for 2000 - 2020 (Millions)', mapRegion="Africa")
+do.call( addMapLegend, c(theMap2, legendWidth=1, legendLabels = 'all', legendMar = 2, labelFontSize =0.8))
+```
+
+Taking a closer look at the MENA Region, we observe that the Top Countries by Asylum are neighboring to the Top Countries by Origin. This falls in line with expectations as Most Refugees travel by Road and thus can't travel to farther regions.<br>
+(Source - https://www.roads-to-refuge.com.au/journeys/journeys-crossing.html)
+
+**One interesting takeaway from the Origin and Asylum Maps is that Syria and Ethiopia show up in both Top Countries by Origin and Top Countries by Asylum. This indicates that there is a significant number of Internally Displaced People in these 2 countries. (Refugees within their own Country)**
+
+## What are some indicators of Refugee Migration?
+
+### Infant Mortality Rate
+
+```{r}
+#Infant Mortality Rate Bubbles
+colourPalette <- brewer.pal(7,'Reds')
+options(scipen=5)
+theMap <- mapCountryData(joinData, nameColumnToPlot="Sum.of.Refugees.under.UNHCR.s.mandate", addLegend=FALSE, catMethod = "pretty", colourPalette = colourPalette, mapTitle='Average Infant Mortality Rate and Refugee Population (Millions)',mapRegion = "Eurasia")
+do.call( addMapLegend, c(theMap, legendWidth=1, legendLabels = 'all', legendMar = 2, labelFontSize =0.8))
+mapBubbles(joinData, nameX='longitude',
+          nameY='latitude',nameZSize = "infant_mortality_rate", nameZColour='dodgerblue',
+            fill=FALSE, 
+           addLegend=FALSE, 
+           add=TRUE, symbolSize = 0.3)
+```
+
+The above Map shows Refugee Population by Origin for 2000 - 2020 in Millions overlayed with Bubbles whose size correspond to Average Infant Mortality Rate by Country. Thus, a large bubble indicates a high mortality rate while a small bubble indicates a low mortality rate. Absolute values for Infant Mortality Rate have been omitted since this visualization is only trying to observe correlations.
+
+**It can be observed that the countries having High Number of Refugees also tend to have Higher Infant Mortality Rates as the Darker Regions on the Map have Bigger Circles in them.  This can be expected because Infants are the most affected by the Refugee Lifestyle.**
+
+### Injury Related Deaths
+
+```{r}
+#Death by Injury
+options(scipen=5)
+colourPalette <- brewer.pal(7,'Reds')
+theMap <- mapCountryData(joinData, nameColumnToPlot="Sum.of.Refugees.under.UNHCR.s.mandate", addLegend=FALSE, catMethod = "pretty", colourPalette = colourPalette, mapTitle='Refugee Population by Origin for 2000 - 2020 (Millions)',mapRegion = "Africa")
+do.call( addMapLegend, c(theMap, legendWidth=1, legendLabels = 'all', legendMar = 2, labelFontSize =0.8))
+options(scipen=5)
+colourPalette <- brewer.pal(5,'Blues')
+theMap <- mapCountryData(joinData, nameColumnToPlot="percent_death_by_injury", addLegend=FALSE, catMethod = "pretty", colourPalette = colourPalette, mapTitle='Average Percentage of Injury Deaths by Country for 2000 - 2020',mapRegion = "Africa")
+do.call( addMapLegend, c(theMap, legendWidth=1, legendLabels = 'all', legendMar = 2, labelFontSize =0.8))
+```
+
+**It can be observed from the above 2 Maps that the countries having High Number of Refugees also tend to have Higher Percentage of Injury Related Deaths. This can be expected because many Refugee Crises happen in War-Struck Countries.**
+
+### Hospital Beds
+
+```{r}
+options(scipen=5)
+colourPalette <- brewer.pal(7,'Reds')
+theMap <- mapCountryData(joinData, nameColumnToPlot="Sum.of.Refugees.under.UNHCR.s.mandate", addLegend=FALSE, catMethod = "pretty", colourPalette = colourPalette, mapTitle='Refugee Population by Origin for 2000 - 2020 (Millions)')
+do.call( addMapLegend, c(theMap, legendWidth=1, legendLabels = 'all', legendMar = 2, labelFontSize =0.8))
+options(scipen=5)
+colourPalette <- brewer.pal(8,'Blues')
+theMap <- mapCountryData(joinData, nameColumnToPlot="Hospital_beds_per_1000", addLegend=FALSE, catMethod = "pretty", colourPalette = colourPalette, mapTitle='Average Number of Hospital Beds per 1000 for 2000 - 2020')
+do.call( addMapLegend, c(theMap, legendWidth=1, legendLabels = 'all', legendMar = 2, labelFontSize =0.8))
+colourPalette <- brewer.pal(7,'Greens')
+options(scipen=5)
+theMap2 <- mapCountryData(joinData2, nameColumnToPlot="Sum.of.Refugees.under.UNHCR.s.mandate", addLegend=FALSE, catMethod = "pretty", colourPalette = colourPalette, mapTitle='Refugee Population by Asylum for 2000 - 2020 (Millions)')
+do.call( addMapLegend, c(theMap2, legendWidth=1, legendLabels = 'all', legendMar = 2, labelFontSize =0.8))
+```
+
+**Looking at the above 3 Maps, no obvious relation can be observed between either Country of Origin & Hospital Beds or Country of Asylum & Hospital Beds as the High and Low values for Each Map are observed at different places.**
+
+### Literacy Rate
+
+```{r}
+library(EDAWR)
+library(dplyr)
+library(GGally)
+library(parcoords)
+data2 <- read.csv("data/clean/refugee_origin_aggregate.csv")
+cstar = top_n(data2,50,data2$Sum.of.Refugees.under.UNHCR.s.mandate )
+cstar = subset(cstar, select = -c(Country_ISO))
+cstar <- subset(cstar, !(Country %in% list("Central African Rep.", "Western Sahara", "Guinea-Bissau", "Lao People's Dem. Rep.", "Palestinian", "Chad", "Stateless", "Tibetan")))
+cstar$Country[match("Bosnia and Herzegovina",cstar$Country)] <- "Bosnia"
+cstar$Country[match("Dem. Rep. of the Congo",cstar$Country)] <- "Congo"
+cstar$Country[match("Serbia and Kosovo: S/RES/1244 (1999)",cstar$Country)] <- "Serbia"
+colnames(cstar) <- c("Country", "Refugees", "ALR", "YLR", "IMR", "PID", "DR", "HB", "GDP")
+```
+
+```{r}
+library(tidyverse)
+dstar <- subset(cstar, !(Country %in% list("Somalia")))
+ggplot(dstar, aes(x = ALR, y = reorder(Country, Refugees))) +
+    geom_point(color = "blue") + ggtitle("Average Adult Literacy Rate by Country for 2000 - 2020")  + theme(plot.title = element_text(hjust = 0.5)) + xlab("Adult Literacy Rate") + ylab("Country")
+```
+
+**This plot shows the countries on y-axis in decreasing order of Number of Refugees. It can be said that Countries with Literacy Rates greater than 90% generally have Low Number of Refugees.**
+
+### Gross Domestic Product
+
+```{r}
+ggplot(cstar, aes(x = GDP, y = reorder(Country, Refugees))) +
+    geom_point(color = "blue") + ggtitle("Average Gross Domestic Product by Country for 2000 - 2020")  + theme(plot.title = element_text(hjust = 0.5)) + xlab("Gross Domestic Product") + ylab("Country")
+```
+
+**This plot shows the countries on y-axis in decreasing order of Number of Refugees. It can be said that Countries with very high GDP per Capita generally have Low Number of Refugees.**
+
+## Do the Countries with Most Refugees show some Common Trend?
+
+```{r}
+#Parallel Coordinate Plot
+parcoords(cstar, rownames = F, brushMode = "1D-axes", reorderable = T, queue = T, withD3 = TRUE, alpha=0.5)
+```
+<font size="2">
+<center>
+Refugees - Number of Refugees<br>
+ALR - Average Adult Literacy Rate<br>
+YLR - Average Youth Literacy Rate<br>
+IMR - Average Infant Mortality Rate<br>
+PID - Average Percentage of Injury Deaths<br>
+DR - Average Death Rate per 1000<br>
+HB - Average Hospital Beds per 1000<br>
+GDP - Average Gross Domestic Prouct per Capita (USD)<br>
+</center>
+</font>
+
+**After filtering the Top 5 Countries by the Number of Refugees on the Interactive Plot, it can be seen that they show a similar trend in some variables. The usually have Medium Literacy Rates, High Injury-Related and Overall Death Rates, Low Hospital Beds & Low GDP per Capita.**
+
+## Can the Findings of the Analysis be validated?
+
+```{r, fig.align='center'}
+#https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a
+
+raw_data_nyt <- read.csv("data/raw/nyt_refugees.csv")
+
+library(wordcloud)
+library(wordcloud2)
+library(RColorBrewer)
+library(tm)
+
+text <- raw_data_nyt$abstract
+
+docs <- Corpus(VectorSource(text))
+
+docs <- docs %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeWords, stopwords("english"))
+
+dtm <- TermDocumentMatrix(docs) 
+matrix <- as.matrix(dtm) 
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+df <- subset(df, !(word %in% list("—", "(m)", "’s", "mr.", "000", "“", "”", "")))
+
+set.seed(1234)
+wordcloud(words = df$word, freq = df$freq, min.freq = 1, max.words=200, random.order=FALSE, rot.per=0.35, colors=brewer.pal(8, "Dark2"))
+```
+
+**The Wordcloud created from scraping relevant New York Times articles since 2000 provides some very interesting insights into the Refugee Crises around the World. Words like Millions, Killed, Lives and Home shed some light on the seriousness of the problem. Violence, Terrorism, Students and Children are some of the Top Words and the presence of these words validate the previous graphical analysis. In addition, there are some words like America, Donald, Trump and Bush which require a Deeper Contextual Analysis.**

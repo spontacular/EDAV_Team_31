@@ -1,2 +1,29 @@
 # Conclusion
 
+<font size="5">**Learnings**</font>
+
+Looking at a subset of the Data having similar scale of values can provide New Insights. This is seen in the MENA focused Maps drawn after the World Map.
+
+Looking at Multiple Graphs in conjunction can help understand correlations. This is seen in the Injury Related Deaths Maps.
+
+Plotting the Same Data on Multiple Graphs can yield Different Insights. This is seen in the Feature Parallel Coordinate Plot.
+
+<font size="5">**Limitations**</font>
+
+The impact of each variable like Mortality Rate, Death Rate etc. on Refugee Population has been analyzed individually.
+
+The Interactive D3 Graph is created only for a subset of countries.
+
+Important Milestones like Start of the Syrian War are mentioned as text below the graph.
+
+The News Article Data used for this project is biased as it has been taken from just one source - The New York Times and can be observed in the results as a lot of American Terms show up in articles.
+
+<font size="5">**Future Directions**</font>
+
+Doing an analysis to observe the combined impact of variables in a Multivariate Format.
+
+Creating the D3 Graph for the entire dataset with Country of Origin acting as a Filter.
+
+Marking Important Milestones on the graph timeline as straight line placeholders.
+
+Removing the News Article Bias by Scraping Data from Multiple Sources Across the Globe.

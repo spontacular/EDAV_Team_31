@@ -24,7 +24,7 @@
 <meta name="author" content="Archit Matta and Tushar Agrawal" />
 
 
-<meta name="date" content="2021-04-10" />
+<meta name="date" content="2021-04-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,10 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/parallel-coordinates-2.1.8/parcoords.css" rel="stylesheet" />
+<script src="libs/parcoords-binding-1.0.0/parcoords.js"></script>
+<script src="libs/d3-5.16.0/d3.min.js"></script>
 
 
 
@@ -74,7 +78,7 @@
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#what-is-the-problem"><i class="fa fa-check"></i><b>2.1</b> What is the Problem?</a></li>
-<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#what-are-the-reasons"><i class="fa fa-check"></i><b>2.2</b> What are the reasons?</a></li>
+<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#what-are-the-reasons"><i class="fa fa-check"></i><b>2.2</b> What are the Reasons?</a></li>
 <li class="chapter" data-level="2.3" data-path="data-sources.html"><a href="data-sources.html#can-this-be-validated"><i class="fa fa-check"></i><b>2.3</b> Can this be Validated?</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
@@ -84,7 +88,21 @@
 <li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#new-york-times-article-data"><i class="fa fa-check"></i><b>3.3</b> New York Times Article Data</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#which-countries-do-most-refugees-come-from"><i class="fa fa-check"></i><b>5.1</b> Which countries do most Refugees come from?</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#which-countries-do-most-refugees-go-to"><i class="fa fa-check"></i><b>5.2</b> Which countries do most Refugees go to?</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#what-are-some-indicators-of-refugee-migration"><i class="fa fa-check"></i><b>5.3</b> What are some indicators of Refugee Migration?</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="results.html"><a href="results.html#infant-mortality-rate"><i class="fa fa-check"></i><b>5.3.1</b> Infant Mortality Rate</a></li>
+<li class="chapter" data-level="5.3.2" data-path="results.html"><a href="results.html#injury-related-deaths"><i class="fa fa-check"></i><b>5.3.2</b> Injury Related Deaths</a></li>
+<li class="chapter" data-level="5.3.3" data-path="results.html"><a href="results.html#hospital-beds"><i class="fa fa-check"></i><b>5.3.3</b> Hospital Beds</a></li>
+<li class="chapter" data-level="5.3.4" data-path="results.html"><a href="results.html#literacy-rate"><i class="fa fa-check"></i><b>5.3.4</b> Literacy Rate</a></li>
+<li class="chapter" data-level="5.3.5" data-path="results.html"><a href="results.html#gross-domestic-product"><i class="fa fa-check"></i><b>5.3.5</b> Gross Domestic Product</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#do-the-countries-with-most-refugees-show-some-common-trend"><i class="fa fa-check"></i><b>5.4</b> Do the Countries with Most Refugees show some Common Trend?</a></li>
+<li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#can-the-findings-of-the-analysis-be-validated"><i class="fa fa-check"></i><b>5.5</b> Can the Findings of the Analysis be validated?</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -109,10 +127,26 @@
 <div id="header">
 <h1 class="title">Refugee Crisis Analysis</h1>
 <p class="author"><em>Archit Matta and Tushar Agrawal</em></p>
-<p class="date"><em>2021-04-10</em></p>
+<p class="date"><em>2021-04-11</em></p>
 </div>
 <div id="introduction" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<p>There are 71 million forcibly displaced people in the world as a result of persecution, conﬂict, violence, or human rights violations — On average, every minute eight people leave everything behind to escape war, persecution or terror. This number has been steadily increasing with time as more people are forced to flee their homes.</p>
+<p>Even though the number of forcibly displaced people is increasing year by year, many countries have closed their borders for families seeking protection and slashed their refugee quotas. In July 2019, the U.S. proposed a refugee resettlement ceiling of 18,000 for fiscal year 2020, a record low and a significant drop from the 97,000 ceiling in 2016. Austria and other countries in the EU led by populist/nativist politicians have closed all doors to asylum-seekers.</p>
+<p>The following link provides an interactive insider view into the life of a refugee - <a href="https://www.bbc.com/news/world-middle-east-32057601" class="uri">https://www.bbc.com/news/world-middle-east-32057601</a></p>
+<p>This topic was chosen because of the team’s interest in working towards social issues &amp; because of the severity of the problem.</p>
+This analysis aims to answer the following questions -
+<ul>
+<li>
+How have the Global Refugee Trends changed with time?
+</li>
+<li>
+What are the key factors influencing these trends?
+</li>
+<li>
+Are News Articles also indicative of these identified trends?
+</li>
+</ul>
 
 </div>
             </section>

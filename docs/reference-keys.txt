@@ -9,5 +9,15 @@ world-bank-databank
 new-york-times-article-data
 missing-values
 results
+which-countries-do-most-refugees-come-from
+which-countries-do-most-refugees-go-to
+what-are-some-indicators-of-refugee-migration
+infant-mortality-rate
+injury-related-deaths
+hospital-beds
+literacy-rate
+gross-domestic-product
+do-the-countries-with-most-refugees-show-some-common-trend
+can-the-findings-of-the-analysis-be-validated
 interactive-component
 conclusion

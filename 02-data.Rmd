@@ -2,8 +2,33 @@
 
 ## What is the Problem?
 
+The first Dataset that this analysis needed was about the **Population of Refugees**.
 
+The United Nations High Commissioner for Refugees (UNHCR) is a UN agency mandated to aid and protect refugees. It also maintains a Refugee Population Statistics Database which is collected from the following 3 sources - UNHCR Statistical Data Collection, United Nations Relief and Works Agency for Palestine Refugees in the Near East Data & Internal Displacement Monitoring Centre Data. This Dataset is available at - https://www.unhcr.org/refugee-statistics/download/?url=E1ZxP4 and was used for this analysis. The Dataset contains variables like Year, Country of Origin, Country of Asylum, Number of Refugees and Asylum Applications and is available in the form of an interactive dashboard.
+
+This Dataset was chosen since UNHCR is the World's Prime Agency for Refugee Repatriation Work and because of the credibility of The UN. 
+
+Some limitations with this Dataset are that it is available only at the yearly level and not at the monthly level & it has slow refresh cycles.
 
 ## What are the Reasons?
 
+The next Dataset that this analysis needed was about the **Reasons behind Refugee Crises**.
+
+The World Bank publishes a Dataset on World Development Indicators (WDI) under the World Bank Open Data Databank. It is the primary World Bank collection of development indicators, compiled from officially recognized international sources. It presents the most current and accurate global development data available, and includes national, regional and global estimates. This Dataset is available at - https://databank.worldbank.org/source/world-development-indicators and was used for this analysis. The Dataset contains 1465 variables like Population, Literacy Rate, Death Rate, Birth Rate etc. by Year and Country & is available in the form of an interactive dashboard.
+
+This Dataset was chosen since The World Bank Open Data Initiative consolidates a lot of different sources and because of it's synergy with the previous UNHCR Dataset. 
+
+One limitation with this Dataset is that the number of missing values varies a lot by country and can only be figured out after downloading the data.
+
 ## Can this be Validated?
+
+The next Dataset that this analysis needed was about the **Validation of our Analysis**.
+
+The New York Times published close to 84,000 articles in 2016.<br>
+(Source - https://www.theatlantic.com/technology/archive/2016/05/how-many-stories-do-newspapers-publish-per-day/483845/)
+
+These Articles can be scraped using The New York Times Article Search API - https://developer.nytimes.com/docs/articlesearch-product/1/overview and can then be analyzed to gain an insight into the reasons behind the Refugee Crises. The Dataset contains variables like Article ID, Date of Publishing, Article URL, Article Title & Article Abstract and can be downloaded as a CSV.
+
+This Dataset was chosen since Archit Matta from the team was involved in developing and using the New York Times Scraper as part of another engagement.
+
+One limitation with this Dataset is that the final results can be biased because of the choice of the News Source.

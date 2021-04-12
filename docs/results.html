@@ -24,7 +24,7 @@
 <meta name="author" content="Archit Matta and Tushar Agrawal" />
 
 
-<meta name="date" content="2021-04-10" />
+<meta name="date" content="2021-04-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,6 +51,10 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/parallel-coordinates-2.1.8/parcoords.css" rel="stylesheet" />
+<script src="libs/parcoords-binding-1.0.0/parcoords.js"></script>
+<script src="libs/d3-5.16.0/d3.min.js"></script>
 
 
 
@@ -74,7 +78,7 @@
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#what-is-the-problem"><i class="fa fa-check"></i><b>2.1</b> What is the Problem?</a></li>
-<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#what-are-the-reasons"><i class="fa fa-check"></i><b>2.2</b> What are the reasons?</a></li>
+<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#what-are-the-reasons"><i class="fa fa-check"></i><b>2.2</b> What are the Reasons?</a></li>
 <li class="chapter" data-level="2.3" data-path="data-sources.html"><a href="data-sources.html#can-this-be-validated"><i class="fa fa-check"></i><b>2.3</b> Can this be Validated?</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
@@ -84,7 +88,21 @@
 <li class="chapter" data-level="3.3" data-path="data-transformation.html"><a href="data-transformation.html#new-york-times-article-data"><i class="fa fa-check"></i><b>3.3</b> New York Times Article Data</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#which-countries-do-most-refugees-come-from"><i class="fa fa-check"></i><b>5.1</b> Which countries do most Refugees come from?</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#which-countries-do-most-refugees-go-to"><i class="fa fa-check"></i><b>5.2</b> Which countries do most Refugees go to?</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#what-are-some-indicators-of-refugee-migration"><i class="fa fa-check"></i><b>5.3</b> What are some indicators of Refugee Migration?</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="results.html"><a href="results.html#infant-mortality-rate"><i class="fa fa-check"></i><b>5.3.1</b> Infant Mortality Rate</a></li>
+<li class="chapter" data-level="5.3.2" data-path="results.html"><a href="results.html#injury-related-deaths"><i class="fa fa-check"></i><b>5.3.2</b> Injury Related Deaths</a></li>
+<li class="chapter" data-level="5.3.3" data-path="results.html"><a href="results.html#hospital-beds"><i class="fa fa-check"></i><b>5.3.3</b> Hospital Beds</a></li>
+<li class="chapter" data-level="5.3.4" data-path="results.html"><a href="results.html#literacy-rate"><i class="fa fa-check"></i><b>5.3.4</b> Literacy Rate</a></li>
+<li class="chapter" data-level="5.3.5" data-path="results.html"><a href="results.html#gross-domestic-product"><i class="fa fa-check"></i><b>5.3.5</b> Gross Domestic Product</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#do-the-countries-with-most-refugees-show-some-common-trend"><i class="fa fa-check"></i><b>5.4</b> Do the Countries with Most Refugees show some Common Trend?</a></li>
+<li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#can-the-findings-of-the-analysis-be-validated"><i class="fa fa-check"></i><b>5.5</b> Can the Findings of the Analysis be validated?</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -108,7 +126,75 @@
             <section class="normal" id="section-">
 <div id="results" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Results</h1>
+<div id="which-countries-do-most-refugees-come-from" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Which countries do most Refugees come from?</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>It can be seen that a significant number of refugees come from the Middle East and North Africa (MENA) Region.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Taking a closer look at the MENA Region, we observe Afghanistan, Syria, Iraq, Somalia and Sudan to be the Top 5 Countries of Origin for Refugees Globally.</p>
+</div>
+<div id="which-countries-do-most-refugees-go-to" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Which countries do most Refugees go to?</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>It can be seen that a significant number of refugees go to the Middle East and North Africa (MENA) Region. There is also some number of Refugees that go to the North America and Asia Regions.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>Taking a closer look at the MENA Region, we observe that the Top Countries by Asylum are neighboring to the Top Countries by Origin. This falls in line with expectations as Most Refugees travel by Road and thus can’t travel to farther regions.<br>
+(Source - <a href="https://www.roads-to-refuge.com.au/journeys/journeys-crossing.html" class="uri">https://www.roads-to-refuge.com.au/journeys/journeys-crossing.html</a>)</p>
+<p><strong>One interesting takeaway from the Origin and Asylum Maps is that Syria and Ethiopia show up in both Top Countries by Origin and Top Countries by Asylum. This indicates that there is a significant number of Internally Displaced People in these 2 countries. (Refugees within their own Country)</strong></p>
+</div>
+<div id="what-are-some-indicators-of-refugee-migration" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> What are some indicators of Refugee Migration?</h2>
+<div id="infant-mortality-rate" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Infant Mortality Rate</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>The above Map shows Refugee Population by Origin for 2000 - 2020 in Millions overlayed with Bubbles whose size correspond to Average Infant Mortality Rate by Country. Thus, a large bubble indicates a high mortality rate while a small bubble indicates a low mortality rate. Absolute values for Infant Mortality Rate have been omitted since this visualization is only trying to observe correlations.</p>
+<p><strong>It can be observed that the countries having High Number of Refugees also tend to have Higher Infant Mortality Rates as the Darker Regions on the Map have Bigger Circles in them. This can be expected because Infants are the most affected by the Refugee Lifestyle.</strong></p>
+</div>
+<div id="injury-related-deaths" class="section level3" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Injury Related Deaths</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-19-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
+<p><strong>It can be observed from the above 2 Maps that the countries having High Number of Refugees also tend to have Higher Percentage of Injury Related Deaths. This can be expected because many Refugee Crises happen in War-Struck Countries.</strong></p>
+</div>
+<div id="hospital-beds" class="section level3" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> Hospital Beds</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-20-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-20-2.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-20-3.png" width="672" /></p>
+<p><strong>Looking at the above 3 Maps, no obvious relation can be observed between either Country of Origin &amp; Hospital Beds or Country of Asylum &amp; Hospital Beds as the High and Low values for Each Map are observed at different places.</strong></p>
+</div>
+<div id="literacy-rate" class="section level3" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> Literacy Rate</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><strong>This plot shows the countries on y-axis in decreasing order of Number of Refugees. It can be said that Countries with Literacy Rates greater than 90% generally have Low Number of Refugees.</strong></p>
+</div>
+<div id="gross-domestic-product" class="section level3" number="5.3.5">
+<h3><span class="header-section-number">5.3.5</span> Gross Domestic Product</h3>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><strong>This plot shows the countries on y-axis in decreasing order of Number of Refugees. It can be said that Countries with very high GDP per Capita generally have Low Number of Refugees.</strong></p>
+</div>
+</div>
+<div id="do-the-countries-with-most-refugees-show-some-common-trend" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Do the Countries with Most Refugees show some Common Trend?</h2>
+<div class="parcoords html-widget" height="480" id="htmlwidget-f43fe995128279702bac" style="width:672px;height:480px; position:relative; overflow-x:auto; overflow-y:hidden; max-width:100%;" width="672"></div>
+<script type="application/json" data-for="htmlwidget-f43fe995128279702bac">{"x":{"data":{"names":["1","2","3","4","5","6","7","9","10","11","12","13","15","16","18","19","20","21","22","24","25","26","27","28","29","30","31","32","33","35","36","37","38","39","40","41","42","43","46","47","48","49"],"Country":["Afghanistan","Angola","Armenia","Azerbaijan","Burundi","Bosnia","Bhutan","China","Cote d'Ivoire","Congo","Colombia","Eritrea","Ethiopia","Guinea","Guatemala","Croatia","Iran (Islamic Rep. of)","Iraq","Cambodia","Liberia","Sri Lanka","Mali","Myanmar","Mozambique","Mauritania","Nigeria","Nicaragua","Pakistan","Philippines","Russian Federation","Rwanda","Sudan","Sierra Leone","El Salvador","Somalia","Serbia","South Sudan","Syrian Arab Rep.","Turkey","Uganda","Ukraine","Viet Nam"],"Refugees":[139759222,17740363,1875707,4100203,14184996,8429882,2155851,8765883,927481,14021121,4914368,10027617,23993475,1066063,1050937,4263050,3399374,27929569,2309732,8449964,3972355,1923220,11047247,9206928,1481018,1966867,984410,1742165,1435357,3774267,15773721,19276273,4027071,2367090,22757980,3706011,12271381,43917187,2907139,2772221,1792466,16266804],"ALR":[37.2342844,66.71776581,99.62687937,99.76262817,59.31912422,97.26563517,58.23113251,94.29519399,45.19904041,70.10960197,93.52977435,64.58248011,39.12187481,29.00520007,76.42279053,98.63602066,82.90463829,79.17536545,77.04015656,45.62121964,91.31762368,30.07293828,82.74647903,53.8592701,50.06968307,59.51629925,79.09822083,55.01476635,95.03827972,99.61843363,68.61832581,58.52014414,36.81976318,85.81813674,0,97.73371887,30.67701912,81.86638641,92.57604276,71.89064941,99.70238113,92.89231873],"YLR":[56.20529938,74.81280899,99.83390045,99.95026779,75.71255779,99.63955688,84.51828512,99.42820485,55.11861324,76.19496155,98.22180367,86.06419627,55.56094265,41.59757678,90.51997566,99.68613815,97.68251147,87.04946772,88.06647949,52.23640442,97.93425751,44.94286804,89.6687355,67.62002182,60.46896362,72.2751236,88.2678477,70.53605929,97.01774445,99.71088409,81.77094269,72.3203125,57.19944509,96.47375419,0,99.4617691,42.30161858,93.82131958,98.11352891,85.06416626,99.88731003,96.77875773],"IMR":[66.47,81.45,17.625,35.685,63.77,6.635,37.21,15.78,76.36,85.695,16.15,41.03,58.085,77.815,29.665,5.115,18.415,28.73,42.94,81.725,10.235,78.9,49.995,76.435,61.37,88.445,21.425,70.2,25.105,9.845,53.58,52.2,109.79,17.71,93.44,7.035,76.21,17.435,17.635,54.83,10.69,18.83],"PID":[13.22123512,8.01878045,4.896224127,4.53022202,12.75473305,4.690610074,9.864271724,8.075734687,8.46367918,8.265808704,19.66851867,11.43353134,10.85180938,8.033133917,15.26053937,5.417482069,13.22179981,20.34559214,8.991167901,8.222563467,11.58495179,8.096758723,7.227951422,8.054993115,9.049080982,7.090966583,10.01640765,7.059827262,7.461247587,9.263323764,10.28064917,10.61696888,7.522320134,20.52212958,8.196618898,3.390871911,9.646511711,21.45510233,5.494817392,9.893521484,6.025593412,8.966785016],"DR":[8.772894737,12.691,9.433894737,5.9,10.83821053,9.502578947,6.892473684,6.875263158,12.85315789,12.26152632,5.268789474,9.068473684,9.494894737,11.773,5.312421053,11.88921053,4.934736842,5.396157895,7.042578947,10.64252632,6.183210526,13.39,8.980105263,12.89936842,8.383421053,14.79126316,5.098842105,7.749894737,5.614421053,14.26315789,8.904842105,8.478,16.619,6.838315789,13.13073684,14.10368421,12.74631579,4.448,5.795736842,10.69473684,15.34736842,5.854789474],"HB":[0.432222222,0.8,4.319375,7.016,1.13,3.327333333,1.688,2.547222222,0.4,0.95,1.426153848,0.95,1.255,0.3,0.5725,5.706111111,1.596111111,1.302777778,0.662857143,0.75,3.337142857,0.333333333,0.818333333,0.766666667,0.4,0.85,0.933571427,0.688333333,0.989090909,9.783684211,1.633333333,1.484444444,0.4,1.015384615,0.645,5.503846154,null,1.466666667,2.573684211,0.74,8.794666667,2.594166675],"GDP":[438.0817036,3041.943758,2818.806488,4091.788264,210.9819611,4123.432041,2016.869242,4815.391733,1327.980434,357.5966527,5228.999835,424.5282789,395.2282823,623.234328,2983.679918,11889.58278,4683.91902,4717.076958,828.0596716,503.0222695,2479.095682,643.1294993,781.4980717,479.7593793,1342.015437,1864.393807,1535.269216,1007.630667,2136.81408,8852.063064,543.1193622,1018.373324,421.3958194,3038.862661,null,5144.124576,1432.645916,1464.146607,8861.517107,583.2465788,2478.264856,1370.858276]},"options":{"rownames":false,"brushMode":"1D-axes","brushPredicate":"AND","reorderable":true,"margin":{"top":50,"bottom":50,"left":100,"right":50},"alpha":0.5,"mode":"queue","bundlingStrength":0.5,"smoothness":0},"autoresize":false,"tasks":null},"evals":[],"jsHooks":[]}</script>
+<font size="2">
+<center>
+Refugees - Number of Refugees<br>
+ALR - Average Adult Literacy Rate<br>
+YLR - Average Youth Literacy Rate<br>
+IMR - Average Infant Mortality Rate<br>
+PID - Average Percentage of Injury Deaths<br>
+DR - Average Death Rate per 1000<br>
+HB - Average Hospital Beds per 1000<br>
+GDP - Average Gross Domestic Prouct per Capita (USD)<br>
+</center>
+<p></font></p>
+<p><strong>After filtering the Top 5 Countries by the Number of Refugees on the Interactive Plot, it can be seen that they show a similar trend in some variables. The usually have Medium Literacy Rates, High Injury-Related and Overall Death Rates, Low Hospital Beds &amp; Low GDP per Capita.</strong></p>
+</div>
+<div id="can-the-findings-of-the-analysis-be-validated" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Can the Findings of the Analysis be validated?</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><strong>The Wordcloud created from scraping relevant New York Times articles since 2000 provides some very interesting insights into the Refugee Crises around the World. Words like Millions, Killed, Lives and Home shed some light on the seriousness of the problem. Violence, Terrorism, Students and Children are some of the Top Words and the presence of these words validate the previous graphical analysis. In addition, there are some words like America, Donald, Trump and Bush which require a Deeper Contextual Analysis.</strong></p>
 
+</div>
 </div>
             </section>
 

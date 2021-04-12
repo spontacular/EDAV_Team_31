@@ -7,7 +7,7 @@ Global Refugee Population Data by Country of Origin from UNHCR - https://www.unh
 This Data came with descriptive headers which were excluded during ingestion. Data with Country Name - 'Unknown' was then removed.
 
 Since the average refugee crisis length is 17 years, this analysis only looked at the years 2000 - 2020 to exclude old crises.
-<br>(**Source** - https://blogs.worldbank.org/dev4peace/2019-update-how-long-do-refugees-stay-exile-find-out-beware-averages)
+<br>(Source - https://blogs.worldbank.org/dev4peace/2019-update-how-long-do-refugees-stay-exile-find-out-beware-averages)
 
 A cross analysis between Country of Origin and Country of Asylum was done only for the Top 5 countries by Refugee Population due to size constraints.
 
@@ -50,7 +50,7 @@ The transformation for this Dataset was conducted in Excel.
 ## New York Times Article Data
 
 News Articles from The New York Times containing any of the following terms - Afghanistan Refugees, Syria Refugees, Iraq Refugees, Somalia Refugees and Sudan Refugees were scraped.
-<br>(**Source** - https://github.com/jsonkao/nyt-articles)
+<br>(Source - https://github.com/jsonkao/nyt-articles)
 
 The Article 'Abstract' was picked as the Text Corporus for this analysis.
 

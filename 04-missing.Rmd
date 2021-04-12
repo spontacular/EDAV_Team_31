@@ -1,6 +1,6 @@
 # Missing values
 
-**UNHCR Refugee Data**
+<font size="5">**UNHCR Refugee Data**</font>
 
 The Refugee Data had a lot of missing values. However since this was time series data, not all missing values were significant. For example - Angola had Refugee Numbers starting from 1960 while Colombia had Refugee Numbers starting from 1981. So even though Colombia would have missing values from 1960 to 1980, these would not be significant as it did not have a Refugee Crisis at that time.
 
@@ -43,7 +43,7 @@ significance <- c('significant', 'insignificant', 'significant', 'insignificant'
 value <- c(significant_null, (total_null - significant_null), significant_null_recent, (total_null_recent - significant_null_recent))
 null_data <- data.frame(years, significance, value)
 
-ggplot(null_data, aes(fill = significance, y = value, x = years)) + geom_bar(position="fill", stat="identity") + ggtitle("Missing Values by Years and Significance")  + theme(plot.title = element_text(hjust = 0.5))
+ggplot(null_data, aes(fill = significance, y = value, x = years)) + geom_bar(position="fill", stat="identity") + ggtitle("Missing Values by Years and Significance")  + theme(plot.title = element_text(hjust = 0.5)) + scale_y_continuous(labels = scales::percent_format()) + xlab("Years") + ylab("Percentage of Missing Values")
 ```
 
 It can be observed that the proportion of Significant Missing Values out of the Total Missing values is more in the time period 2000 - 2020 in comparison to 1960 - 2020. The absolute percentage of Significant Missing Values out of the Total Values for the time period 1960 - 2020 is 0.82% and for the time period 2000 - 2020 is 0.39%.
@@ -57,10 +57,10 @@ ggplot(data = NULL, aes(x = as.numeric(names(na_count)), y = as.numeric(na_count
 
 It can be observed that the number of Missing Values seems to have a decresing trend with Year.
 
-**World Bank Databank**
+<font size="5">**World Bank Databank**</font>
 
 The World Bank Databank had all values missing for 2020. This could be because of a Data Refresh Delay. The other missing values did not have a direct impact as the average over the entire time period was calculated.
 
-**New York Times Article Data**
+<font size="5">**New York Times Article Data**</font>
 
 The New York Times Dataset did not have any missing values in the Abstract field. This could be because of some sanity checks by the New York Times Article Search API.
