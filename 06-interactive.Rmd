@@ -1,3 +1,1412 @@
 # Interactive component
 
+<div id="scatter"></div>
 
+<script src="https://d3js.org/d3.v6.js"></script>
+
+<!-- Add 2 buttons -->
+<button onclick="update1(data1)">Origin Countries</button>
+<button onclick="update2(data2)">Afghanistan</button>
+<button onclick="update3(data3)">Syria</button>
+<button onclick="update4(data4)">Iraq</button>
+<button onclick="update5(data5)">Somalia</button>
+<button onclick="update6(data6)">Sudan</button>
+
+<div id="my_dataviz"></div>
+
+<script>
+
+// reference links
+// https://www.d3-graph-gallery.com/graph/line_several_group.html
+// https://www.d3-graph-gallery.com/graph/line_change_data.html
+
+/*var data1 = [
+   {Year: 1990, Country1: 4, Country2: 3},
+   {Year: 1995, Country1: 16, Country2: 5},
+   {Year: 2000, Country1: 8, Country2: 7}, 
+   {Year: 2005, Country1: 5, Country2: 10},
+   {Year: 2010, Country1: 18, Country2: 18},
+   {Year: 2015, Country1: 11, Country2: 6}];*/
+var data1 = [{"Year": 2000, "Country1": 3587.327, "Country2": 526.165, "Country3": 475.644, "Country4": 494.351, "Country5": 5.868}, {"Year": 2001, "Country1": 3809.763, "Country2": 530.508, "Country3": 440.12, "Country4": 489.931, "Country5": 4.861}, {"Year": 2002, "Country1": 2510.294, "Country2": 422.504, "Country3": 432.304, "Country4": 508.863, "Country5": 18.908}, {"Year": 2003, "Country1": 2136.039, "Country2": 368.578, "Country3": 402.329, "Country4": 606.231, "Country5": 20.817}, {"Year": 2004, "Country1": 2414.46, "Country2": 311.89, "Country3": 389.287, "Country4": 730.631, "Country5": 21.431}, {"Year": 2005, "Country1": 2166.139, "Country2": 262.302, "Country3": 395.544, "Country4": 693.621, "Country5": 16.395}, {"Year": 2006, "Country1": 2107.51, "Country2": 1450.909, "Country3": 464.026, "Country4": 686.297, "Country5": 12.328}, {"Year": 2007, "Country1": 3057.655, "Country2": 2309.247, "Country3": 457.345, "Country4": 523.029, "Country5": 13.684}, {"Year": 2008, "Country1": 2833.117, "Country2": 1903.517, "Country3": 561.146, "Country4": 419.249, "Country5": 15.206}, {"Year": 2009, "Country1": 2887.114, "Country2": 1785.215, "Country3": 678.297, "Country4": 368.178, "Country5": 17.915}, {"Year": 2010, "Country1": 3054.699, "Country2": 1683.576, "Country3": 770.143, "Country4": 387.266, "Country5": 18.451}, {"Year": 2011, "Country1": 2664.423, "Country2": 1428.306, "Country3": 1077.038, "Country4": 500.005, "Country5": 19.931}, {"Year": 2012, "Country1": 2586.132, "Country2": 746.204, "Country3": 1136.71, "Country4": 568.935, "Country5": 729.012}, {"Year": 2013, "Country1": 2556.483, "Country2": 401.461, "Country3": 1121.76, "Country4": 648.936, "Country5": 2468.323}, {"Year": 2014, "Country1": 2596.259, "Country2": 369.96, "Country3": 1106.43, "Country4": 665.956, "Country5": 3887.49}, {"Year": 2015, "Country1": 2666.294, "Country2": 264.086, "Country3": 1123.144, "Country4": 627.08, "Country5": 4873.236}, {"Year": 2016, "Country1": 2501.447, "Country2": 316.056, "Country3": 1012.32, "Country4": 650.391, "Country5": 5524.511}, {"Year": 2017, "Country1": 2624.265, "Country2": 362.536, "Country3": 986.386, "Country4": 694.556, "Country5": 6310.498}, {"Year": 2018, "Country1": 2681.267, "Country2": 372.332, "Country3": 949.637, "Country4": 724.787, "Country5": 6654.374}, {"Year": 2019, "Country1": 2727.556, "Country2": 336.274, "Country3": 901.596, "Country4": 734.78, "Country5": 6615.249}, {"Year": 2020, "Country1": 2729.148, "Country2": 325.485, "Country3": 910.654, "Country4": 771.54, "Country5": 6596.627}];
+
+var data2 = [{"Year": 2000, "Country1": 2000.0, "Country2": 1482.0, "Country3": 0.0, "Country4": 5.675, "Country5": 23.629}, {"Year": 2001, "Country1": 2197.821, "Country2": 1482.0, "Country3": 0.0, "Country4": 15.065, "Country5": 26.024}, {"Year": 2002, "Country1": 1226.569, "Country2": 1104.909, "Country3": 52.289, "Country4": 20.305, "Country5": 26.001}, {"Year": 2003, "Country1": 1123.647, "Country2": 834.699, "Country3": 46.975, "Country4": 21.718, "Country5": 26.433}, {"Year": 2004, "Country1": 1290.408, "Country2": 952.802, "Country3": 38.576, "Country4": 22.494, "Country5": 25.907}, {"Year": 2005, "Country1": 1084.208, "Country2": 920.248, "Country3": 31.055, "Country4": 22.532, "Country5": 25.086}, {"Year": 2006, "Country1": 1043.984, "Country2": 914.26, "Country3": 21.879, "Country4": 23.069, "Country5": 21.357}, {"Year": 2007, "Country1": 2034.416, "Country2": 906.071, "Country3": 24.236, "Country4": 23.565, "Country5": 17.296}, {"Year": 2008, "Country1": 1780.15, "Country2": 935.595, "Country3": 25.108, "Country4": 23.079, "Country5": 13.477}, {"Year": 2009, "Country1": 1739.935, "Country2": 1022.494, "Country3": 30.32, "Country4": 23.658, "Country5": 9.383}, {"Year": 2010, "Country1": 1899.842, "Country2": 1027.577, "Country3": 30.404, "Country4": 23.406, "Country5": 6.731}, {"Year": 2011, "Country1": 1701.945, "Country2": 840.451, "Country3": 30.425, "Country4": 14.424, "Country5": 5.697}, {"Year": 2012, "Country1": 1637.74, "Country2": 824.087, "Country3": 31.746, "Country4": 9.845, "Country5": 6.126}, {"Year": 2013, "Country1": 1615.876, "Country2": 814.015, "Country3": 24.203, "Country4": 9.166, "Country5": 6.269}, {"Year": 2014, "Country1": 1504.912, "Country2": 950.0, "Country3": 27.814, "Country4": 9.054, "Country5": 6.244}, {"Year": 2015, "Country1": 1560.592, "Country2": 951.142, "Country3": 30.026, "Country4": 9.354, "Country5": 5.803}, {"Year": 2016, "Country1": 1352.16, "Country2": 951.142, "Country3": 46.292, "Country4": 9.752, "Country5": 5.791}, {"Year": 2017, "Country1": 1392.61, "Country2": 951.142, "Country3": 104.385, "Country4": 9.858, "Country5": 6.205}, {"Year": 2018, "Country1": 1403.521, "Country2": 951.142, "Country3": 126.018, "Country4": 9.839, "Country5": 6.267}, {"Year": 2019, "Country1": 1419.084, "Country2": 951.142, "Country3": 140.366, "Country4": 9.513, "Country5": 5.815}, {"Year": 2020, "Country1": 1424.961, "Country2": 951.142, "Country3": 133.37, "Country4": 9.539, "Country5": 5.557}];
+
+var data3 = [{"Year": 2000, "Country1": 0, "Country2": 0, "Country3": 0.0, "Country4": 0.0, "Country5": 0.049}, {"Year": 2001, "Country1": 0.006, "Country2": 0, "Country3": 0.0, "Country4": 0.0, "Country5": 0.101}, {"Year": 2002, "Country1": 0.006, "Country2": 0, "Country3": 0.005, "Country4": 14.398, "Country5": 0.1}, {"Year": 2003, "Country1": 0.005, "Country2": 0, "Country3": 0.028, "Country4": 15.745, "Country5": 0.643}, {"Year": 2004, "Country1": 0.0, "Country2": 0, "Country3": 0.037, "Country4": 16.184, "Country5": 0.489}, {"Year": 2005, "Country1": 0.012, "Country2": 0, "Country3": 0.04, "Country4": 10.469, "Country5": 0.627}, {"Year": 2006, "Country1": 0.0, "Country2": 0.006, "Country3": 0.042, "Country4": 5.844, "Country5": 0.663}, {"Year": 2007, "Country1": 0.005, "Country2": 0.048, "Country3": 0.041, "Country4": 6.996, "Country5": 0.59}, {"Year": 2008, "Country1": 0.012, "Country2": 0.084, "Country3": 0.044, "Country4": 8.205, "Country5": 0.534}, {"Year": 2009, "Country1": 0.008, "Country2": 0.09, "Country3": 0.138, "Country4": 10.217, "Country5": 0.757}, {"Year": 2010, "Country1": 0.009, "Country2": 0.064, "Country3": 0.198, "Country4": 10.518, "Country5": 0.254}, {"Year": 2011, "Country1": 0.019, "Country2": 0.124, "Country3": 0.193, "Country4": 10.155, "Country5": 0.323}, {"Year": 2012, "Country1": 248.466, "Country2": 126.939, "Country3": 238.798, "Country4": 18.165, "Country5": 63.586}, {"Year": 2013, "Country1": 585.601, "Country2": 851.284, "Country3": 585.304, "Country4": 21.253, "Country5": 212.809}, {"Year": 2014, "Country1": 1557.899, "Country2": 1147.494, "Country3": 623.112, "Country4": 40.994, "Country5": 234.196}, {"Year": 2015, "Country1": 2503.549, "Country2": 1062.69, "Country3": 628.223, "Country4": 115.604, "Country5": 244.642}, {"Year": 2016, "Country1": 2823.987, "Country2": 1005.503, "Country3": 648.836, "Country4": 375.122, "Country5": 230.836}, {"Year": 2017, "Country1": 3424.237, "Country2": 992.127, "Country3": 653.031, "Country4": 496.674, "Country5": 247.057}, {"Year": 2018, "Country1": 3622.366, "Country2": 944.181, "Country3": 676.283, "Country4": 532.065, "Country5": 252.526}, {"Year": 2019, "Country1": 3576.37, "Country2": 910.586, "Country3": 654.692, "Country4": 572.818, "Country5": 245.81}, {"Year": 2020, "Country1": 3574.836, "Country2": 884.266, "Country3": 657.96, "Country4": 562.168, "Country5": 245.421}];
+
+var data4 = [{"Year": 2000, "Country1": 1.829, "Country2": 0.919, "Country3": 386.0, "Country4": 0.0, "Country5": 25.57}, {"Year": 2001, "Country1": 1.677, "Country2": 0.942, "Country3": 386.0, "Country4": 0.0, "Country5": 25.889}, {"Year": 2002, "Country1": 1.716, "Country2": 1.069, "Country3": 201.671, "Country4": 72.697, "Country5": 25.698}, {"Year": 2003, "Country1": 2.435, "Country2": 0.965, "Country3": 150.196, "Country4": 73.489, "Country5": 23.918}, {"Year": 2004, "Country1": 14.391, "Country2": 0.889, "Country3": 93.173, "Country4": 68.071, "Country5": 22.028}, {"Year": 2005, "Country1": 24.874, "Country2": 0.754, "Country3": 54.0, "Country4": 52.922, "Country5": 21.046}, {"Year": 2006, "Country1": 700.0, "Country2": 500.0, "Country3": 54.024, "Country4": 36.205, "Country5": 23.852}, {"Year": 2007, "Country1": 1500.0, "Country2": 500.0, "Country3": 57.414, "Country4": 34.731, "Country5": 30.423}, {"Year": 2008, "Country1": 1100.0, "Country2": 500.0, "Country3": 44.444, "Country4": 38.854, "Country5": 32.12}, {"Year": 2009, "Country1": 1050.0, "Country2": 450.0, "Country3": 47.924, "Country4": 49.033, "Country5": 31.558}, {"Year": 2010, "Country1": 1000.0, "Country2": 450.0, "Country3": 45.708, "Country4": 50.432, "Country5": 29.013}, {"Year": 2011, "Country1": 750.0, "Country2": 450.0, "Country3": 45.937, "Country4": 48.976, "Country5": 27.367}, {"Year": 2012, "Country1": 471.418, "Country2": 63.037, "Country3": 44.085, "Country4": 49.829, "Country5": 24.741}, {"Year": 2013, "Country1": 146.2, "Country2": 55.509, "Country3": 43.268, "Country4": 40.23, "Country5": 24.006}, {"Year": 2014, "Country1": 146.2, "Country2": 29.263, "Country3": 32.0, "Country4": 41.167, "Country5": 24.184}, {"Year": 2015, "Country1": 18.253, "Country2": 33.256, "Country3": 28.268, "Country4": 51.396, "Country5": 23.886}, {"Year": 2016, "Country1": 16.879, "Country2": 33.118, "Country3": 28.268, "Country4": 86.045, "Country5": 21.693}, {"Year": 2017, "Country1": 16.325, "Country2": 34.037, "Country3": 28.268, "Country4": 130.64, "Country5": 15.524}, {"Year": 2018, "Country1": 15.699, "Country2": 34.626, "Country3": 28.268, "Country4": 136.463, "Country5": 12.693}, {"Year": 2019, "Country1": 13.311, "Country2": 34.336, "Country3": 28.268, "Country4": 141.65, "Country5": 12.46}, {"Year": 2020, "Country1": 12.419, "Country2": 34.225, "Country3": 28.268, "Country4": 131.935, "Country5": 12.058}];
+
+var data5 = [{"Year": 2000, "Country1": 137.376, "Country2": 56.524, "Country3": 121.096, "Country4": 26.891, "Country5": 4.81}, {"Year": 2001, "Country1": 144.349, "Country2": 67.485, "Country3": 67.129, "Country4": 31.366, "Country5": 5.336}, {"Year": 2002, "Country1": 155.767, "Country2": 80.763, "Country3": 37.532, "Country4": 34.131, "Country5": 6.515}, {"Year": 2003, "Country1": 154.272, "Country2": 59.246, "Country3": 28.276, "Country4": 36.106, "Country5": 6.89}, {"Year": 2004, "Country1": 153.627, "Country2": 63.511, "Country3": 16.47, "Country4": 36.7, "Country5": 7.118}, {"Year": 2005, "Country1": 150.459, "Country2": 78.582, "Country3": 15.901, "Country4": 36.319, "Country5": 7.548}, {"Year": 2006, "Country1": 173.702, "Country2": 91.587, "Country3": 16.576, "Country4": 34.138, "Country5": 7.818}, {"Year": 2007, "Country1": 192.42, "Country2": 110.616, "Country3": 25.843, "Country4": 33.659, "Country5": 8.554}, {"Year": 2008, "Country1": 259.121, "Country2": 132.275, "Country3": 33.625, "Country4": 31.665, "Country5": 8.543}, {"Year": 2009, "Country1": 310.28, "Country2": 161.468, "Country3": 58.98, "Country4": 32.299, "Country5": 9.718}, {"Year": 2010, "Country1": 351.773, "Country2": 179.845, "Country3": 81.247, "Country4": 23.893, "Country5": 15.186}, {"Year": 2011, "Country1": 517.666, "Country2": 204.685, "Country3": 185.466, "Country4": 19.668, "Country5": 15.186}, {"Year": 2012, "Country1": 512.069, "Country2": 226.909, "Country3": 223.031, "Country4": 15.134, "Country5": 17.864}, {"Year": 2013, "Country1": 475.304, "Country2": 230.506, "Country3": 240.825, "Country4": 11.249, "Country5": 20.818}, {"Year": 2014, "Country1": 424.691, "Country2": 244.204, "Country3": 245.097, "Country4": 8.512, "Country5": 40.133}, {"Year": 2015, "Country1": 417.92, "Country2": 253.215, "Country3": 256.669, "Country4": 6.977, "Country5": 41.458}, {"Year": 2016, "Country1": 324.448, "Country2": 255.121, "Country3": 242.014, "Country4": 5.954, "Country5": 28.695}, {"Year": 2017, "Country1": 281.692, "Country2": 255.894, "Country3": 253.779, "Country4": 4.67, "Country5": 26.977}, {"Year": 2018, "Country1": 252.498, "Country2": 248.955, "Country3": 257.199, "Country4": 3.92, "Country5": 27.113}, {"Year": 2019, "Country1": 257.766, "Country2": 252.899, "Country3": 192.181, "Country4": 3.271, "Country5": 23.635}, {"Year": 2020, "Country1": 258.994, "Country2": 256.417, "Country3": 200.39, "Country4": 3.101, "Country5": 23.635}];
+
+var data6 = [{"Year": 2000, "Country1": 17.436, "Country2": 0, "Country3": 212.156, "Country4": 71.732, "Country5": 55.585}, {"Year": 2001, "Country1": 12.558, "Country2": 0, "Country3": 176.766, "Country4": 80.934, "Country5": 69.804}, {"Year": 2002, "Country1": 12.729, "Country2": 0, "Country3": 188.194, "Country4": 89.952, "Country5": 57.779}, {"Year": 2003, "Country1": 110.0, "Country2": 0, "Country3": 198.281, "Country4": 94.899, "Country5": 63.197}, {"Year": 2004, "Country1": 224.924, "Country2": 0, "Country3": 214.673, "Country4": 90.451, "Country5": 67.556}, {"Year": 2005, "Country1": 228.836, "Country2": 0, "Country3": 212.857, "Country4": 73.927, "Country5": 76.646}, {"Year": 2006, "Country1": 233.025, "Country2": 0, "Country3": 215.675, "Country4": 66.98, "Country5": 73.004}, {"Year": 2007, "Country1": 242.555, "Country2": 0, "Country3": 162.063, "Country4": 35.493, "Country5": 45.261}, {"Year": 2008, "Country1": 267.966, "Country2": 0, "Country3": 56.883, "Country4": 25.913, "Country5": 28.496}, {"Year": 2009, "Country1": 262.194, "Country2": 0, "Country3": 20.836, "Country4": 23.516, "Country5": 20.315}, {"Year": 2010, "Country1": 278.257, "Country2": 0, "Country3": 19.382, "Country4": 25.238, "Country5": 20.528}, {"Year": 2011, "Country1": 298.311, "Country2": 76.845, "Country3": 18.268, "Country4": 45.286, "Country5": 17.568}, {"Year": 2012, "Country1": 306.96, "Country2": 176.834, "Country3": 7.91, "Country4": 27.175, "Country5": 3.157}, {"Year": 2013, "Country1": 352.948, "Country2": 208.13, "Country3": 1.068, "Country4": 33.582, "Country5": 3.907}, {"Year": 2014, "Country1": 357.711, "Country2": 225.727, "Country3": 1.802, "Country4": 35.447, "Country5": 3.381}, {"Year": 2015, "Country1": 299.75, "Country2": 241.002, "Country3": 1.992, "Country4": 37.785, "Country5": 3.419}, {"Year": 2016, "Country1": 312.468, "Country2": 241.51, "Country3": 2.545, "Country4": 39.896, "Country5": 2.863}, {"Year": 2017, "Country1": 324.327, "Country2": 261.983, "Country3": 2.355, "Country4": 43.892, "Country5": 2.922}, {"Year": 2018, "Country1": 336.674, "Country2": 269.924, "Country3": 2.802, "Country4": 44.003, "Country5": 3.582}, {"Year": 2019, "Country1": 335.246, "Country2": 275.563, "Country3": 2.627, "Country4": 41.479, "Country5": 3.568}, {"Year": 2020, "Country1": 363.597, "Country2": 279.812, "Country3": 2.717, "Country4": 42.658, "Country5": 3.891}];
+
+
+
+var parseTime = d3.timeParse("%Y");
+
+data1.forEach(function (d) {
+    d.Year = parseTime(d.Year);
+});
+data2.forEach(function (d) {
+    d.Year = parseTime(d.Year);
+});
+data3.forEach(function (d) {
+    d.Year = parseTime(d.Year);
+});
+data4.forEach(function (d) {
+    d.Year = parseTime(d.Year);
+});
+
+data5.forEach(function (d) {
+    d.Year = parseTime(d.Year);
+});
+data6.forEach(function (d) {
+    d.Year = parseTime(d.Year);
+});
+
+
+
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 30, bottom: 30, left: 50},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+    
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", width-175)
+    .attr("y", height + margin.top + 20)
+    .style("font-size", "14px")
+    .style("fill", "black") 
+    .text("Year");
+
+
+// Y axis label:
+svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("transform", "rotate(-90)")
+    .attr("y", -margin.left+10)
+    .attr("x", -margin.top+-55)
+    .style("font-size", "14px")
+    .style("fill", "black") 
+    .text("Population of Refugees (Thousands)")
+    
+// Initialise a X axis:
+var xExtent = d3.extent(data1, d => d.Year)
+
+
+var x = d3.scaleTime().domain([new Date("2000-01-01"), new Date("2020-01-01")]).range([0,width]);
+var xAxis = d3.axisBottom().scale(x);
+svg.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .attr("class","myXaxis")
+
+// Initialize an Y axis
+var y = d3.scaleLinear().range([height, 0]);
+var yAxis = d3.axisLeft().scale(y);
+svg.append("g")
+  .attr("class","myYaxis")
+  
+  
+// Create a function that takes a dataset as input and update the plot:
+
+function update1(data) {
+
+  // Create the X axis:
+  x.domain([new Date("2000"), new Date("2020-01-02")]);
+  svg.selectAll(".myXaxis").transition()
+    .duration(3000)
+    .call(xAxis);
+    
+  var u = svg.selectAll(".elem10")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("rect")
+    .merge(u)
+    .transition()
+    .duration(0)
+    .attr("x", 35).attr("y", 2).attr("width",100).attr("height",55).style("fill","white")
+    
+   
+  var u = svg.selectAll(".elem0")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",10).attr("r", 3).style("fill", "steelblue")
+    
+   var u = svg.selectAll(".elem1")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",20).attr("r", 3).style("fill", "black")
+  
+  var u = svg.selectAll(".elem2")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",30).attr("r", 3).style("fill", "red")
+  var u = svg.selectAll(".elem3")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",40).attr("r", 3).style("fill", "green")
+  var u = svg.selectAll(".elem4")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",50).attr("r", 3).style("fill", "orange")
+  var u = svg.selectAll(".elem5")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 10).text("Afghanistan").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  var u = svg.selectAll(".elem6")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 20).text("Syria").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem7")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 30).text("Somalia").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem8")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 40).text("Iraq").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem9")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 50).text("Sudan").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+    
+  /*svg.append("rect").attr("x", 35).attr("y", 8).attr("width",100).attr("height",50)
+  svg.
+  svg.append("circle").attr("cx", 40).attr("cy",20).attr("r", 3).style("fill", "#69b3a2")
+  svg.append("circle").attr("cx", 40).attr("cy",30).attr("r", 3).style("fill", "#69b3a2")
+  svg.append("circle").attr("cx", 40).attr("cy",40).attr("r", 3).style("fill", "#69b3a2")
+  svg.append("circle").attr("cx",40).attr("cy",50).attr("r", 3).style("fill", "#404080")
+  svg.append("text").attr("x", 50).attr("y", 10).text("variable A").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  svg.append("text").attr("x", 50).attr("y", 20).text("variable A").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  svg.append("text").attr("x", 50).attr("y", 30).text("variable A").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  svg.append("text").attr("x", 50).attr("y", 40).text("variable A").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  svg.append("text").attr("x", 50).attr("y", 50).text("variable B").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  */
+
+  // create the Y axis
+  //y.domain([0, d3.max(data, function(d) { return d.ser2  }) ]);
+  y.domain([0, 8000]);
+  svg.selectAll(".myYaxis")
+    .transition()
+    .duration(3000)
+    .call(yAxis);
+
+  // Create a update selection: bind to the new data
+  var u = svg.selectAll(".lineTest1")
+    .data([data], function(d){ return d.Year });
+
+  // Update the line
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest1")
+    .merge(u)
+    .transition()
+    .duration(3000)
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country1); }))
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest2")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest2")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country2); }))
+      .attr("fill", "none")
+      .attr("stroke", "green")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest3")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest3")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country3); }))
+      .attr("fill", "none")
+      .attr("stroke", "red")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest4")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest4")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country4); }))
+      .attr("fill", "none")
+      .attr("stroke", "orange")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest5")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest5")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country5); }))
+      .attr("fill", "none")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2.5)
+}
+
+function update2(data) {
+
+  // Create the X axis:
+  x.domain([new Date("2000"), new Date("2020-01-02")]);
+  svg.selectAll(".myXaxis").transition()
+    .duration(3000)
+    .call(xAxis);
+    
+  //svg.append("rect").attr("x", 35).attr("y", 8).attr("width",100).attr("height",50)
+  
+  // create the Y axis
+  //y.domain([0, d3.max(data, function(d) { return d.ser2  }) ]);
+  y.domain([0, 3000]);
+  svg.selectAll(".myYaxis")
+    .transition()
+    .duration(3000)
+    .call(yAxis);
+
+  // Create a update selection: bind to the new data
+ 
+ var u = svg.selectAll(".elem10")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("rect")
+    .merge(u)
+    .transition()
+    .duration(0)
+    .attr("x", 35).attr("y", 2).attr("width",100).attr("height",55).style("fill","white")
+ 
+  
+  
+  var u = svg.selectAll(".elem0")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",10).attr("r", 3).style("fill", "steelblue")
+    
+   var u = svg.selectAll(".elem1")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",20).attr("r", 3).style("fill", "black")
+  
+  var u = svg.selectAll(".elem2")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",30).attr("r", 3).style("fill", "red")
+  var u = svg.selectAll(".elem3")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",40).attr("r", 3).style("fill", "green")
+  var u = svg.selectAll(".elem4")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",50).attr("r", 3).style("fill", "orange")
+  var u = svg.selectAll(".elem5")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 10).text("Pakistan").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  var u = svg.selectAll(".elem6")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 20).text("Netherlands").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem7")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 30).text("Germany").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem8")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 40).text("Iran").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem9")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 50).text("United Kingdom").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".lineTest1")
+    .data([data], function(d){ return d.Year });
+
+  // Update the line
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest1")
+    .merge(u)
+    .transition()
+    .duration(3000)
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country1); }))
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest2")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest2")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country2); }))
+      .attr("fill", "none")
+      .attr("stroke", "green")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest3")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest3")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country3); }))
+      .attr("fill", "none")
+      .attr("stroke", "red")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest4")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest4")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country4); }))
+      .attr("fill", "none")
+      .attr("stroke", "orange")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest5")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest5")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country5); }))
+      .attr("fill", "none")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2.5)
+}
+function update3(data) {
+
+  // Create the X axis:
+  x.domain([new Date("2000"), new Date("2020-01-02")]);
+  svg.selectAll(".myXaxis").transition()
+    .duration(3000)
+    .call(xAxis);
+
+  // create the Y axis
+  //y.domain([0, d3.max(data, function(d) { return d.ser2  }) ]);
+  y.domain([0, 4000]);
+  svg.selectAll(".myYaxis")
+    .transition()
+    .duration(3000)
+    .call(yAxis);
+    
+  var u = svg.selectAll(".elem10")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("rect")
+    .merge(u)
+    .transition()
+    .duration(0)
+    .attr("x", 35).attr("y", 2).attr("width",100).attr("height",55).style("fill","white")
+ 
+  
+  
+  var u = svg.selectAll(".elem0")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",10).attr("r", 3).style("fill", "steelblue")
+    
+   var u = svg.selectAll(".elem1")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",20).attr("r", 3).style("fill", "black")
+  
+  var u = svg.selectAll(".elem2")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",30).attr("r", 3).style("fill", "red")
+  var u = svg.selectAll(".elem3")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",40).attr("r", 3).style("fill", "green")
+  var u = svg.selectAll(".elem4")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",50).attr("r", 3).style("fill", "orange")
+  var u = svg.selectAll(".elem5")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 10).text("Turkey").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  var u = svg.selectAll(".elem6")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 20).text("Iraq").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem7")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 30).text("Jordan").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem8")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 40).text("Lebanon").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem9")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 50).text("Germany").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".lineTest1")
+    .data([data], function(d){ return d.Year });
+
+  // Create a update selection: bind to the new data
+  var u = svg.selectAll(".lineTest1")
+    .data([data], function(d){ return d.Year });
+
+  // Update the line
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest1")
+    .merge(u)
+    .transition()
+    .duration(3000)
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country1); }))
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest2")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest2")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country2); }))
+      .attr("fill", "none")
+      .attr("stroke", "green")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest3")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest3")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country3); }))
+      .attr("fill", "none")
+      .attr("stroke", "red")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest4")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest4")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country4); }))
+      .attr("fill", "none")
+      .attr("stroke", "orange")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest5")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest5")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country5); }))
+      .attr("fill", "none")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2.5)
+}
+function update4(data) {
+
+  // Create the X axis:
+  x.domain([new Date("2000"), new Date("2020-01-02")]);
+  svg.selectAll(".myXaxis").transition()
+    .duration(3000)
+    .call(xAxis);
+
+  // create the Y axis
+  //y.domain([0, d3.max(data, function(d) { return d.ser2  }) ]);
+  y.domain([0, 2000]);
+  svg.selectAll(".myYaxis")
+    .transition()
+    .duration(3000)
+    .call(yAxis);
+    
+  var u = svg.selectAll(".elem10")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("rect")
+    .merge(u)
+    .transition()
+    .duration(0)
+    .attr("x", 35).attr("y", 2).attr("width",100).attr("height",55).style("fill","white")
+ 
+  
+  
+  var u = svg.selectAll(".elem0")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",10).attr("r", 3).style("fill", "steelblue")
+    
+   var u = svg.selectAll(".elem1")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",20).attr("r", 3).style("fill", "black")
+  
+  var u = svg.selectAll(".elem2")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",30).attr("r", 3).style("fill", "red")
+  var u = svg.selectAll(".elem3")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",40).attr("r", 3).style("fill", "green")
+  var u = svg.selectAll(".elem4")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",50).attr("r", 3).style("fill", "orange")
+  var u = svg.selectAll(".elem5")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 10).text("Syria").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  var u = svg.selectAll(".elem6")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 20).text("Sweden").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem7")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 30).text("Iran").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem8")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 40).text("Jordan").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem9")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 50).text("Germany").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".lineTest1")
+    .data([data], function(d){ return d.Year });
+
+  // Create a update selection: bind to the new data
+  var u = svg.selectAll(".lineTest1")
+    .data([data], function(d){ return d.Year });
+
+  // Update the line
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest1")
+    .merge(u)
+    .transition()
+    .duration(3000)
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country1); }))
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest2")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest2")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country2); }))
+      .attr("fill", "none")
+      .attr("stroke", "green")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest3")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest3")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country3); }))
+      .attr("fill", "none")
+      .attr("stroke", "red")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest4")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest4")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country4); }))
+      .attr("fill", "none")
+      .attr("stroke", "orange")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest5")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest5")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country5); }))
+      .attr("fill", "none")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2.5)
+}
+function update5(data) {
+
+  // Create the X axis:
+  x.domain([new Date("2000"), new Date("2020-01-02")]);
+  svg.selectAll(".myXaxis").transition()
+    .duration(3000)
+    .call(xAxis);
+
+  // create the Y axis
+  //y.domain([0, d3.max(data, function(d) { return d.ser2  }) ]);
+  y.domain([0, 700]);
+  svg.selectAll(".myYaxis")
+    .transition()
+    .duration(3000)
+    .call(yAxis);
+  
+  var u = svg.selectAll(".elem10")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("rect")
+    .merge(u)
+    .transition()
+    .duration(0)
+    .attr("x", 35).attr("y", 2).attr("width",100).attr("height",55).style("fill","white")
+ 
+  
+  
+  var u = svg.selectAll(".elem0")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",10).attr("r", 3).style("fill", "steelblue")
+    
+   var u = svg.selectAll(".elem1")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",20).attr("r", 3).style("fill", "black")
+  
+  var u = svg.selectAll(".elem2")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",30).attr("r", 3).style("fill", "red")
+  var u = svg.selectAll(".elem3")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",40).attr("r", 3).style("fill", "green")
+  var u = svg.selectAll(".elem4")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",50).attr("r", 3).style("fill", "orange")
+  var u = svg.selectAll(".elem5")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 10).text("Kenya").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  var u = svg.selectAll(".elem6")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 20).text("South Africa").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem7")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 30).text("Ethiopia").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem8")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 40).text("Yemen").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem9")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 50).text("United Kingdom").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".lineTest1")
+    .data([data], function(d){ return d.Year });
+  
+  // Create a update selection: bind to the new data
+  var u = svg.selectAll(".lineTest1")
+    .data([data], function(d){ return d.Year });
+
+  // Update the line
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest1")
+    .merge(u)
+    .transition()
+    .duration(3000)
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country1); }))
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest2")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest2")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country2); }))
+      .attr("fill", "none")
+      .attr("stroke", "green")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest3")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest3")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country3); }))
+      .attr("fill", "none")
+      .attr("stroke", "red")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest4")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest4")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country4); }))
+      .attr("fill", "none")
+      .attr("stroke", "orange")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest5")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest5")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country5); }))
+      .attr("fill", "none")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2.5)
+}
+function update6(data) {
+
+  // Create the X axis:
+  x.domain([new Date("2000"), new Date("2020-01-02")]);
+  svg.selectAll(".myXaxis").transition()
+    .duration(3000)
+    .call(xAxis);
+
+  // create the Y axis
+  //y.domain([0, d3.max(data, function(d) { return d.ser2  }) ]);
+  y.domain([0, 500]);
+  svg.selectAll(".myYaxis")
+    .transition()
+    .duration(3000)
+    .call(yAxis);
+    
+  var u = svg.selectAll(".elem10")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("rect")
+    .merge(u)
+    .transition()
+    .duration(0)
+    .attr("x", 35).attr("y", 2).attr("width",100).attr("height",55).style("fill","white")
+ 
+  
+  
+  var u = svg.selectAll(".elem0")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",10).attr("r", 3).style("fill", "steelblue")
+    
+   var u = svg.selectAll(".elem1")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",20).attr("r", 3).style("fill", "black")
+  
+  var u = svg.selectAll(".elem2")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",30).attr("r", 3).style("fill", "red")
+  var u = svg.selectAll(".elem3")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",40).attr("r", 3).style("fill", "green")
+  var u = svg.selectAll(".elem4")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("circle")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("cx", 40).attr("cy",50).attr("r", 3).style("fill", "orange")
+  var u = svg.selectAll(".elem5")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 10).text("Chad").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  var u = svg.selectAll(".elem6")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 20).text("Kenya").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem7")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 30).text("Uganda").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem8")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 40).text("South Sudan").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".elem9")
+    .data([data], function(d){ return d.Year });
+  u. 
+    enter()
+    .append("text")
+    .merge(u)
+    .transition()
+    .duration(200)
+    .attr("x", 50).attr("y", 50).text("Ethiopia").style("font-size",
+  "10px").attr("alignment-baseline","middle")
+  
+  var u = svg.selectAll(".lineTest1")
+    .data([data], function(d){ return d.Year });
+
+  // Create a update selection: bind to the new data
+  var u = svg.selectAll(".lineTest1")
+    .data([data], function(d){ return d.Year });
+
+  // Update the line
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest1")
+    .merge(u)
+    .transition()
+    .duration(3000)
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country1); }))
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest2")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest2")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country2); }))
+      .attr("fill", "none")
+      .attr("stroke", "green")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest3")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest3")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country3); }))
+      .attr("fill", "none")
+      .attr("stroke", "red")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest4")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest4")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country4); }))
+      .attr("fill", "none")
+      .attr("stroke", "orange")
+      .attr("stroke-width", 2.5)
+  var u = svg.selectAll(".lineTest5")
+    .data([data], function(d){ return d.Year });
+  u 
+    .enter()
+    .append("path")
+    .attr("class","lineTest5")
+    .merge(u)
+    .transition()
+    .duration(3000)    
+    .attr("d", d3.line()
+      .x(function(d) { return x(d.Year); })
+      .y(function(d) { return y(d.Country5); }))
+      .attr("fill", "none")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2.5)
+}
+
+
+update1(data1)
+
+
+</script>
+
+<b>This is an interactive D3 Line Chart showing the change in Refugee Population from 2000 - 2020. 
+
+In the Origin Countries Chart, we can see the trends of changing refugee population by year for the top 5 countries of origin by refugee population, namely: Afghanistan, Syria, Iraq, Somalia and Sudan. 
+
+As we click on the button for each of the 5 countries, we can see the refugee population trends from the country of origin to the top 5 countries of asylum.</b>
